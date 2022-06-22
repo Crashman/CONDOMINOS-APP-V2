@@ -25,8 +25,11 @@ jobs:
         run: |
           npm install
           npm install -g @angular/cli > /dev/null
-          npm run build --if-present
-
+          npm run build --base-href /wwwroot/fuse/ --if-present
+      
+      - name: Zip artifact for deployment
+        run: zip dist.zip ./* -r
+    
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
@@ -45,6 +48,9 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: node-app
+      
+      - name: unzip artifact for deployment
+        run: unzip dist.zip
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
