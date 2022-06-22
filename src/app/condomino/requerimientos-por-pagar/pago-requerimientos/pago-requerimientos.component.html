@@ -1,0 +1,303 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
+    <div class="flex flex-col flex-auto min-w-0">
+        
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-body">
+                    <div class="text-4xl font-extrabold tracking-tight leading-none">Pago de requerimientos</div>
+                    <div class="mt-1.5 text-lg text-secondary">Aplicar un pago a varios requerimientos.</div> 
+                </div>
+            </div>
+        </div>
+        <div class="d-flex mb-3 mt-3">
+            
+            <div class="d-flex mb-3 mt-3">
+                <button
+                class="ml-4"
+                mat-flat-button
+                [color]="'primary'"
+                (click)="newPago(content1)">
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2 mr-1">Crear</span>
+                </button>
+            </div>
+
+            
+        </div>
+
+        <form [formGroup]="_pagoForm" action="/action_page.php" class="was-validated">
+
+            <div class="form-group">
+
+                <ng-template #content1 let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title">Pago de Requerimiento</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="getRequerimientos()"
+                            (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="codigoPago">Código de pago:</label>
+                                    <input type="text" formControlName="codigoPago" class="form-control"
+                                        id="codigoPago" name="codigoPago" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="banco">Banco: </label>
+                                    <select formControlName="banco" class="form-control" id="banco" required>
+                                        <option value="" selected>Banco origen</option>
+                                        <option value="AZTECA">AZTECA</option>
+                                        <option value="BAC">BAC</option>
+                                        <option value="BANCO DE ACNTIGUA">BANCO DE ANTIGUA</option>
+                                        <option value="BANCO DE GUATEMALA">BANCO DE GUATEMALA</option>
+                                        <option value="BANCO INV S.A.">BANCO INV S.A.</option>
+                                        <option value="BANCO PROMERICA">BANCO PROMERICA</option>
+                                        <option value="BANRURAL">BANRURAL</option>
+                                        <option value="BANTAB">BANTRAB</option>
+                                        <option value="CITIBANK N.A.">CITIBANK N.A.</option>
+                                        <option value="FICHOSA">FICHOSA</option>
+                                        <option value="G&T CONTINENTAL">G&T CONTINENTAL</option>
+                                        <option value="INMOBILIARIO">INMOBILIARIO</option>
+                                        <option value="BANCO INDUSTRIAL">BANCO INDUSTRIAL</option>
+                                        <option value="INETNACIONAL">INETNACIONAL</option>
+                                        <option value="VIVIBANCO">VIVIBANCO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="comprobanteFecha">Fecha de documento de pago:</label>
+                                    <input type="date" formControlName="comprobanteFecha" class="form-control"
+                                        id="comprobanteFecha" name="comprobanteFecha" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="comprobantePago">Número de documento de pago :</label>
+                                    <input type="text" step="any" formControlName="comprobantePago" class="form-control"
+                                        id="comprobantePago" name="comprobantePago" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="comprobanteMonto">Monto:</label>
+                                    <input type="number" step="any" formControlName="comprobanteMonto" class="form-control"
+                                        id="comprobanteMonto" name="comprobanteMonto" required>
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <input #imageInput type='file'
+                                    accept='image/*'
+                                    (change)='processFile(imageInput)'>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="fechaPago">Fecha de transacción:</label>
+                                    <input type="date" formControlName="fechaPago" class="form-control" id="fechaPago"
+                                        name="fechaPago" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="montoTotal">Monto total seleccionado:</label>
+                                    <input type="number" step="any" formControlName="montoTotal" class="form-control"
+                                        id="montoTotal" name="montoTotal" disabled>
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">Por favor rellene este campo.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Fecha</th>
+                                                <th>Monto</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let Requerimiento of _listaRequerimiento table-active"
+                                                [class.selectedRow]="rowIsSelected(Requerimiento.codigoRequerimiento)"
+                                                (click)="onRowClick(Requerimiento.codigoRequerimiento, Requerimiento.monto)"
+                                                style="cursor: pointer;">
+                                                <td class="row-left title">{{Requerimiento.codigoRequerimiento}}</td>
+                                                <td class="row-mid title">{{Requerimiento.fechaStr}}</td>
+                                                <td class="row-mid title">{{Requerimiento.monto}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button class="btn btn-success btn-rounded btn-block" (click)="savePago()">
+                            Guardar</button>
+
+                        <button type="button" class="btn btn-danger btn-rounded btn-block" (click)="getRequerimientos()"
+                            (click)="modal.close('Close click')">Cerrar</button>
+                    </div>
+                </ng-template>
+            </div>
+        </form>
+
+        <form [formGroup]="_requerimientoForm" action="/action_page.php" class="was-validated">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>No. Casa</th>
+                                    <th>Propietario</th>
+                                    <th>Fecha</th>
+                                    <th>Saldo</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let Requerimiento of _listaRequerimiento table-active">
+                                    <td>{{Requerimiento.codigoRequerimiento}}</td>
+                                    <td>{{Requerimiento.numeroCasa}}</td>
+                                    <td>{{Requerimiento.nombreCondomino}}</td>
+                                    <td>{{Requerimiento.fechaStr}}</td>
+                                    <td>{{Requerimiento.saldo}}</td>
+                                    <td>{{Requerimiento.estadoStr}}</td>
+                                    <td>
+
+                                        <button
+                                        class="ml-4"
+                                        mat-flat-button
+                                        [color]="'primary'"
+                                        (click)="getRequerimiento(content2, Requerimiento.codigoRequerimiento)">
+                                        <mat-icon [svgIcon]="'heroicons_outline:eye'"></mat-icon>
+                                        </button>
+
+                                        <ng-template #content2 let-modal>
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Detalle de Requerimiento</h4>
+                                                <button type="button" class="close" aria-label="Close"
+                                                    (click)="modal.dismiss('Cross click')">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="form-group">
+                                                            <label for="codigoRequerimiento">Código de
+                                                                Requerimiento:</label>
+                                                            <input type="number" formControlName="codigoRequerimiento"
+                                                                class="form-control" id="codigoRequerimiento"
+                                                                name="codigoRequerimiento" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="form-group">
+                                                            <label for="fecha">Fecha de creación:</label>
+                                                            <input type="date" formControlName="fecha" class="form-control"
+                                                                id="fecha" name="fecha" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="form-group">
+                                                            <label for="monto">Monto:</label>
+                                                            <input type="number" formControlName="monto" class="form-control"
+                                                                id="monto" name="monto" disabled>
+                                                            <div class="valid-feedback"></div>
+                                                            <div class="invalid-feedback">Por favor rellene este campo.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="form-group">
+                                                            <label for="saldo">Saldo:</label>
+                                                            <input type="number" step="any" formControlName="saldo"
+                                                                class="form-control" id="saldo" name="saldo" disabled>
+                                                            <div class="valid-feedback"></div>
+                                                            <div class="invalid-feedback">Por favor rellene este campo.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger btn-rounded btn-block"
+                                                    (click)="modal.close('Close click')">Cerrar</button>
+                                            </div>
+
+                                        </ng-template>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+                &nbsp;
+
+                <div class="form-group">
+                    <button
+                        class="ml-4"
+                        mat-flat-button
+                        [color]="'primary'"
+                        (click)="gotoHome()">
+                        <mat-icon [svgIcon]="'heroicons_outline:arrow-left'"></mat-icon>
+                        <span class="ml-2 mr-1">Regresar</span>
+                        </button>
+                </div>
+
+        </form>
+    </div>
+</div>

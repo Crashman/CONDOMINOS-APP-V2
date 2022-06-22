@@ -1,0 +1,157 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
+
+    <div class="flex flex-col flex-auto min-w-0">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-body">
+                <div class="text-4xl font-extrabold tracking-tight leading-none">Requerimientos de Cobro</div>
+                <div class="mt-1.5 text-lg text-secondary">Creación de requerimientos de cobro por lote o individuales.</div>
+                <div class="btn-block">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control btn-block" placeholder="Busqueda" [(ngModel)]='searchTerm'>
+                        </div>
+                    </div>
+                </div>
+                &nbsp;
+                <div class="row">
+                    <div class="col">
+
+                        <div class="form-group">
+
+                            <button
+                            class="ml-4"
+                            mat-flat-button
+                            [color]="'primary'"
+                            (click)="RequerimientoModal(content1)"> 
+                            <mat-icon [svgIcon]="'heroicons_outline:annotation'"></mat-icon>
+                            <span class="ml-2 mr-1">Generar Requerimientos</span>
+                            </button>
+        
+                            &nbsp;
+        
+                            <button
+                            class="ml-4"
+                            mat-flat-button
+                            [color]="'primary'"
+                            [routerLink]="['crear']">
+                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                            <span class="ml-2 mr-1">Crear Requerimiento</span>
+                            </button>
+        
+                        </div>
+                    </div>
+                </div>
+
+                <form [formGroup]="_requerimientoForm" action="/action_page.php" class="was-validated">
+
+                    <div class="form-group">
+
+                        <ng-template #content1 let-modal>
+
+                            <div class="modal-header">
+                                <h4 class="modal-title">Generar Requerimientos</h4>
+                                <button type="btn btn-primary ml-auto" class="close" aria-label="Close"
+                                    (click)="getRequerimientos()" (click)="modal.dismiss('Cross click')">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="fecha">Fecha de Creación:</label>
+                                            <input type="date" formControlName="fecha" class="form-control" id="fecha"
+                                                placeholder="Fecha de creación" name="fecha" required>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+
+                                <button class="btn btn-block btn-rounded btn-success" (click)="generarRequerimientos()">
+                                    Aceptar</button>
+
+                                <button type="button" class="btn btn-block btn-rounded btn-danger"
+                                    (click)="getRequerimientos()" (click)="modal.close('Close click')">Cerrar</button>
+                            </div>
+                        </ng-template>
+                        <!--<button class="btn btn-info btn-block" (click)="newLectura()"><i class="fa fa-clone"> Crear</i></button>-->
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>No. Casa</th>
+                                                <th>Propietario</th>
+                                                <th>Fecha</th>
+                                                <th>Saldo</th>
+                                                <th>Estado</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let Requerimiento of _listaRequerimiento | paginate: { itemsPerPage: 10, currentPage: _pagination } table-active ">
+                                                <td>{{Requerimiento.codigoRequerimiento}}</td>
+                                                <td>{{Requerimiento.numeroCasa}}</td>
+                                                <td>{{Requerimiento.nombreCondomino}}</td>
+                                                <td>{{Requerimiento.fechaStr}}</td>
+                                                <td>{{Requerimiento.saldo}}</td>
+                                                <td>{{Requerimiento.estadoStr}}</td>
+                                                <td>
+
+                                                    <button
+                                                    class="ml-4"
+                                                    mat-flat-button
+                                                    [color]="'primary'"
+                                                    (click)="deleteRequerimiento(Requerimiento.codigoRequerimiento)">
+                                                    <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                                                    </button>
+
+                                                    <button
+                                                    class="ml-4"
+                                                    mat-flat-button
+                                                    [color]="'primary'"
+                                                    [routerLink]="['detalle',Requerimiento.codigoRequerimiento]">
+                                                    <mat-icon [svgIcon]="'heroicons_outline:eye'"></mat-icon>
+                                                    </button>
+
+                                                    <button
+                                                    class="ml-4"
+                                                    mat-flat-button
+                                                    [color]="'primary'"
+                                                    [routerLink]="['pago',Requerimiento.codigoRequerimiento]">
+                                                    <mat-icon [svgIcon]="'heroicons_outline:credit-card'"></mat-icon>
+                                                    </button>
+
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <ngb-pagination [collectionSize]="_cantidad" [(page)]="_pagination" [maxSize]="5"
+                            [boundaryLinks]="true">
+                        </ngb-pagination>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <notifier-container></notifier-container>
+</div>

@@ -1,0 +1,304 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
+    <div class="flex flex-col flex-auto min-w-0">
+
+        <form [formGroup]="PropiedadForm" action="/action_page.php" class="was-validated">
+
+            <mat-accordion class="max-w-4xl mt-12">
+                <mat-expansion-panel [expanded]="1">
+                    <mat-expansion-panel-header [collapsedHeight]="'70px'">
+                        <mat-panel-title><div class="text-4xl font-extrabold tracking-tight leading-none">Datos Generales</div></mat-panel-title>
+                    </mat-expansion-panel-header>
+                
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="numeroCasa">Número de casa:</label>
+                                        <input type="text" formControlName="numeroCasa" class="form-control" id="numeroCasa"
+                                            placeholder="Ingresar número de casa" name="numeroCasa" disabled>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="codigoCondominio">Condominio: </label>
+                                        <select id="codigoCondominio" formControlName="codigoCondominio" class="form-control"
+                                            disabled>
+                                            <option value="" disabled selected>Seleccione Condominio:</option>
+                                            <option *ngFor="let Condominios of ListaCondominio"
+                                                [value]="Condominios.codigoCondominio">
+                                                {{Condominios.nombre}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="codigoUsuario">Propietario: </label>
+                                        <select id="codigoUsuario" formControlName="codigoUsuario" class="form-control"
+                                            required>
+                                            <option value="" disabled selected>Propietario</option>
+                                            <option *ngFor="let Usuarios of ListaCondomino" [value]="Usuarios.codigoUsuario">
+                                                {{Usuarios.nombres}} {{Usuarios.apellidos}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="direccion">Dirección:</label>
+                                        <input type="text" formControlName="direccion" class="form-control" id="direccion"
+                                            placeholder="Ingresar dirección" name="direccion" required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="telefono">Telefono:</label>
+                                <input type="text" formControlName="telefono" class="form-control" id="telefono"
+                                    placeholder="2222-2222" name="telefono" required>
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="estado">Estado: </label>
+                                <select formControlName="estado" class="form-control" id="estado" required>
+                                    <option value="" disabled selected>Estado de propiedad:</option>
+                                    <option value="1">Habitada</option>
+                                    <option value="0">Deshabitada</option>
+                                </select>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="contador">Número de Contador:</label>
+                                        <input type="text" formControlName="contador" class="form-control" id="contador"
+                                            placeholder="Ingresar numero de contador" name="contador" disabled>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="lecturaInicial">Lectura inicial:</label>
+                                        <input type="number" formControlName="lecturaInicial" class="form-control"
+                                            id="lecturaInicial" placeholder="Ingresar lectura inicial de contador"
+                                            name="lecturaInicial" required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+
+        </form>
+
+        <form [formGroup]="LecturaForm" action="/action_page.php" class="was-validated">
+
+            <mat-accordion class="max-w-4xl mt-12">
+                <mat-expansion-panel [expanded]="1">
+                    <mat-expansion-panel-header [collapsedHeight]="'70px'">
+                        <mat-panel-title><div class="text-4xl font-extrabold tracking-tight leading-none">Lecturas de Contador</div></mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="panel-body"></div>
+                            <div class="table-responsive">
+                                <table class="table table-sm table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Fecha</th>
+                                            <th>Lectura</th>
+                                            <th>Consumo (m3)</th>
+                                            <th>Exceso (m3)</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let Lectura of ListaLecturas | paginate: { itemsPerPage: 4, currentPage: pagination } table-active ">
+                                            <td>{{Lectura.codigoLectura}}</td>
+                                            <td>{{Lectura.fechaStr}}</td>
+                                            <td>{{Lectura.lectura}}</td>
+                                            <td>{{Lectura.consumoMes}}</td>
+                                            <td>{{Lectura.exceso}}</td>
+                                            <td>
+                                                <ng-template #content3 let-modal>
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Detalle de Lectura</h4>
+                                                        <button type="button" class="close" aria-label="Close"
+                                                            (click)="modal.dismiss('Cross click')">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label for="codigoLectura">Código:</label>
+                                                                    <input type="number" formControlName="codigoLectura"
+                                                                        class="form-control" id="codigoLectura" name="codigoLectura"
+                                                                        disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label for="fecha">Fecha:</label>
+                                                                    <input type="date" formControlName="fecha" class="form-control"
+                                                                        id="fecha" name="fecha" disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label for="cantidadMetroCubico">Limite (m3) :</label>
+                                                                    <input type="number" step="any"
+                                                                        formControlName="cantidadMetroCubico" class="form-control"
+                                                                        id="cantidadMetroCubico" name="cantidadMetroCubico"
+                                                                        disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label for="lectura">Lectura (m3):</label>
+                                                                    <input type="number" step="any" formControlName="lectura"
+                                                                        class="form-control" id="lectura" name="lectura" disabled>
+                                                                    <div class="valid-feedback"></div>
+                                                                    <div class="invalid-feedback">Por favor rellene este campo.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label for="lecturaAnterior">Lectura anterior (m3):</label>
+                                                                    <input type="number" step="any"
+                                                                        formControlName="lecturaAnterior" class="form-control"
+                                                                        id="lecturaAnterior" name="lecturaAnterior" disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label for="consumoMes">Consumo (m3):</label>
+                                                                    <input type="number" step="any" formControlName="consumoMes"
+                                                                        class="form-control" id="consumoMes" name="consumoMes"
+                                                                        disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label for="exceso">Exceso (m3):</label>
+                                                                    <input type="number" step="any" formControlName="exceso"
+                                                                        class="form-control" id="exceso" name="exceso" disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <img
+                                                                    class="object-cover"
+                                                                    class='img-preview' 
+                                                                    src="{{selectedFileRead.src}}"
+                                                                    alt="Card cover image">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer btn-sm">
+                                                        <button type="button" class="btn btn-danger btn-block"
+                                                            (click)="modal.close('Close click')">Cerrar</button>
+                                                    </div>
+                                                </ng-template>
+
+                                                <button
+                                                class="ml-4"
+                                                mat-flat-button
+                                                [color]="'primary'"
+                                                (click)="getLectura(content3, Lectura.codigoLectura)">
+                                                <mat-icon [svgIcon]="'heroicons_outline:eye'"></mat-icon>
+                                                </button>
+                                            
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <pagination-controls (pageChange)="pagination = $event"></pagination-controls>
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <div class="form-group">
+
+                <button
+                class="ml-4"
+                mat-flat-button
+                [color]="'primary'"
+                (click)="savePropiedad()"> 
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2 mr-1">Guardar</span>
+                </button>
+
+                &nbsp;
+
+                <button
+                class="ml-4"
+                mat-flat-button
+                [color]="'primary'"
+                (click)="gotoHome()">
+                <mat-icon [svgIcon]="'heroicons_outline:arrow-left'"></mat-icon>
+                <span class="ml-2 mr-1">Regresar</span>
+                </button>
+
+            </div>
+
+        </form>
+    </div>
+</div>

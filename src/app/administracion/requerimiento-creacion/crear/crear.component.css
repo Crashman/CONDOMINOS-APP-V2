@@ -1,0 +1,7 @@
+p {
+    font-family: Lato;
+  }
+  
+  .selectedRow {
+    background-color: rgb(134, 138, 139);
+  }

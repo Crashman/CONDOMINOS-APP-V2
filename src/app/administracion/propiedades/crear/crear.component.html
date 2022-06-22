@@ -1,0 +1,147 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
+
+    <div class="flex flex-col flex-auto min-w-0">
+
+        <form [formGroup]="PropiedadForm" action="/action_page.php" class="was-validated">
+
+            <mat-accordion class="max-w-4xl mt-12">
+                <mat-expansion-panel [expanded]="1">
+                    <mat-expansion-panel-header [collapsedHeight]="'70px'">
+                        <mat-panel-title><div class="text-4xl font-extrabold tracking-tight leading-none">Datos Generales</div></mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="numeroCasa">Número de casa:</label>
+                                        <input type="text" formControlName="numeroCasa" class="form-control" id="numeroCasa"
+                                            placeholder="Ingresar número de casa" name="numeroCasa" required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="codigoCondominio">Condominio: </label>
+                                        <select id="codigoCondominio" formControlName="codigoCondominio" class="form-control"
+                                            required>
+                                            <option value="" disabled selected>Seleccione Condominio:</option>
+                                            <option *ngFor="let Condominios of ListaCondominio"
+                                                [value]="Condominios.codigoCondominio">
+                                                {{Condominios.nombre}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="codigoUsuario">Condomino: </label>
+                                        <select id="codigoUsuario" formControlName="codigoUsuario" class="form-control"
+                                            required>
+                                            <option value="" disabled selected>Seleccione Condomino</option>
+                                            <option *ngFor="let Usuarios of ListaCondomino" [value]="Usuarios.codigoUsuario">
+                                                {{Usuarios.nombres}} {{Usuarios.apellidos}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="direccion">Dirección:</label>
+                                        <input type="text" formControlName="direccion" class="form-control" id="direccion"
+                                            placeholder="Ingresar dirección" name="direccion" required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="estado">Estado: </label>
+                                <select formControlName="estado" class="form-control" id="estado" required>
+                                    <option value="" disabled selected>Estado de propiedad:</option>
+                                    <option value="1">Habitada</option>
+                                    <option value="0">Deshabitada</option>
+                                </select>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="telefono">Teléfono de la propiedad:</label>
+                                        <input type="text" formControlName="telefono" class="form-control" id="telefono"
+                                            placeholder="Teléfono" name="telefono" pattern="[0-9]{8,8}" required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="contador">Número de Contador:</label>
+                                        <input type="text" formControlName="contador" class="form-control" id="contador"
+                                            placeholder="Ingresar numero de contador" name="contador" required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="lecturaInicial">Lectura inicial:</label>
+                                        <input type="number" formControlName="lecturaInicial" class="form-control"
+                                            id="lecturaInicial" placeholder="Ingresar lectura inicial de contador"
+                                            name="lecturaInicial" required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <div class="form-group">
+
+                <button
+                class="ml-4"
+                mat-flat-button
+                [color]="'primary'"
+                (click)="savePropiedad()"> 
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2 mr-1">Guardar</span>
+                </button>
+
+                &nbsp;
+
+                <button
+                class="ml-4"
+                mat-flat-button
+                [color]="'primary'"
+                (click)="gotoHome()">
+                <mat-icon [svgIcon]="'heroicons_outline:arrow-left'"></mat-icon>
+                <span class="ml-2 mr-1">Regresar</span>
+                </button>
+
+            </div>
+
+        </form>
+    </div>
+</div>

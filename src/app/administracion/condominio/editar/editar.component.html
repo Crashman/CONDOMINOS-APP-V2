@@ -1,0 +1,370 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
+
+    <div class="flex flex-col flex-auto min-w-0">
+
+        <form [formGroup]="CondominioForm" action="/action_page.php" class="was-validated">
+
+            <mat-accordion class="max-w-4xl mt-12">
+                <mat-expansion-panel [expanded]="1">
+                    <mat-expansion-panel-header [collapsedHeight]="'70px'">
+                        <mat-panel-title><div class="text-4xl font-extrabold tracking-tight leading-none">Condominio</div></mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="codigoCondominio">Código:</label>
+                                        <input type="text" formControlName="codigoCondominio" class="form-control"
+                                            id="codigoCondominio" name="codigoCondominio" disabled>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre:</label>
+                                        <input type="text" formControlName="nombre" class="form-control" id="nombre"
+                                            placeholder="Ingresar nombre" name="nombre" required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="direccion">Dirección:</label>
+                                        <input type="text" formControlName="direccion" class="form-control" id="direccion"
+                                            placeholder="Ingresar dirección" name="direccion" required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="nit">NIT:</label>
+                                        <input type="text" formControlName="nit" class="form-control" id="nit"
+                                            placeholder="1234567-0" name="nit" required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="telefono">Telefono:</label>
+                                        <input type="text" formControlName="telefono" class="form-control" id="telefono"
+                                            placeholder="2222-2222" name="telefono" required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="correo">Correo:</label>
+                                <input type="text" formControlName="correo" class="form-control" id="correo"
+                                    placeholder="Ingresar correo electronico" name="correo" required>
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="banco">Cuenta de banco:</label>
+                                <input type="text" formControlName="banco" class="form-control" id="banco"
+                                 name="banco">
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+        </form>
+
+        <form [formGroup]="ServicioForm" action="/action_page.php" class="was-validated">
+            
+            <mat-accordion class="max-w-4xl mt-12">
+                <mat-expansion-panel [expanded]="1">
+                    <mat-expansion-panel-header [collapsedHeight]="'70px'">
+                        <mat-panel-title><div class="text-4xl font-extrabold tracking-tight leading-none">Detalle de Servicios</div></mat-panel-title>
+                    </mat-expansion-panel-header>
+
+
+                <div class="card">
+
+                    <div class="panel-body">
+
+                        <div class="card-body table-responsive">
+                            <table class="table table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Descripción</th>
+                                        <th>Valor</th>
+                                        <th>Tipo</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let Servicio of ListaServicio | paginate: { itemsPerPage: 4, currentPage: pagination } table-active ">
+                                        <td>{{Servicio.codigoServicio}}</td>
+                                        <td>{{Servicio.nombreServicio}}</td>
+                                        <td>{{Servicio.valor}}</td>
+                                        <td>{{Servicio.tipo}}</td>
+                                        <td>
+                                            <button
+                                            class="ml-4"
+                                            mat-flat-button
+                                            [color]="'primary'"
+                                            (click)="deleteServicio(Servicio.codigoServicio)">
+                                            <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button
+                                            class="ml-4"
+                                            mat-flat-button
+                                            [color]="'primary'"
+                                            (click)="getServicio(Servicio.codigoServicio)">
+                                            <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <pagination-controls (pageChange)="pagination = $event"></pagination-controls>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="codigoServicio">Código:</label>
+                                    <input type="number" formControlName="codigoServicio" class="form-control"
+                                        id="codigoServicio" name="codigoServicio" disabled>
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="nombreServicio">Descripción:</label>
+                                    <input type="text" formControlName="nombreServicio" class="form-control" id="nombreServicio"
+                                        name="nombreServicio" required>
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="valor">Valor:</label>
+                                    <input type="number" step="any" formControlName="valor" class="form-control" id="valor"
+                                        name="valor" required>
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="tipo">Tipo de cobro: </label>
+                                    <select formControlName="tipo" class="form-control" id="tipo" required>
+                                        <option value="" disabled selected>Tipo cobro</option>
+                                        <option value="Mensual">Mensual</option>
+                                        <option value="Mora">Mora</option>
+                                        <option value="Individual">Individual</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        &nbsp;
+
+                        <div class="form-group">
+                            <button
+                            class="ml-4"
+                            mat-flat-button
+                            [color]="'primary'"
+                            (click)="saveServicio()"> 
+                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                            <span class="ml-2 mr-1">Guardar</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+        </form>
+
+        <form [formGroup]="DetCondominioForm" action="/action_page.php" class="was-validated">
+
+            <mat-accordion class="max-w-4xl mt-12">
+                <mat-expansion-panel [expanded]="1">
+                    <mat-expansion-panel-header [collapsedHeight]="'70px'">
+                        <mat-panel-title><div class="text-4xl font-extrabold tracking-tight leading-none">Datos Generales</div></mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="panel-body">
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="cantidadMetroCubico">Cantidad de m3 por propiedad:</label>
+                                        <input type="number" formControlName="cantidadMetroCubico" class="form-control"
+                                            id="cantidadMetroCubico" name="cantidadMetroCubico" required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="costoMetroCubico">Costo m3 de agua:</label>
+                                        <input type="number" formControlName="costoMetroCubico" class="form-control"
+                                            id="costoMetroCubico" name="costoMetroCubico" required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="costoMetroCubicoExcedente">Costo por m3 de agua excedente:</label>
+                                        <input type="number" step="any" formControlName="costoMetroCubicoExcedente"
+                                            class="form-control" id="costoMetroCubicoExcedente" name="costoMetroCubicoExcedente"
+                                            required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="fechaPago">Ultimo dia de pago:</label>
+                                        <input type="number" step="any" formControlName="fechaPago" class="form-control"
+                                            id="fechaPago" name="fechaPago" required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="fechaLectura">Dia de lectura de contadores:</label>
+                                        <input type="number" step="any" formControlName="fechaLectura" class="form-control"
+                                            id="fechaLectura" name="fechaLectura" required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="smtpServer">Servidor SMTP:</label>
+                                        <input type="text" formControlName="smtpServer" class="form-control" id="smtpServer"
+                                            name="smtpServer" required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="smtpPassword">Password Servidor SMTP:</label>
+                                        <input type="password" formControlName="smtpPassword" class="form-control"
+                                            id="smtpPassword" name="smtpPassword" required>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            &nbsp;
+
+                            <div class="form-group">
+                                <button
+                                class="ml-4"
+                                mat-flat-button
+                                [color]="'primary'"
+                                (click)="saveDetCondominio()"> 
+                                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                                <span class="ml-2 mr-1">Guardar</span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </form>
+
+        &nbsp;
+
+        <div class="form-group">
+
+            <button
+            class="ml-4"
+            mat-flat-button
+            [color]="'primary'"
+            (click)="updateCondominio()"> 
+            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+            <span class="ml-2 mr-1">Guardar</span>
+            </button>
+
+            &nbsp;
+
+            <button
+            class="ml-4"
+            mat-flat-button
+            [color]="'primary'"
+            (click)="gotoHome()">
+            <mat-icon [svgIcon]="'heroicons_outline:arrow-left'"></mat-icon>
+            <span class="ml-2 mr-1">Regresar</span>
+            </button>
+
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-body">
+                <div class="text-4xl font-extrabold tracking-tight leading-none">Lecturas de Contadores de Agua</div>
+                <div class="mt-1.5 text-lg text-secondary">Registro de las lecturas de agua por propiedad.</div>
+                <div class="d-flex mb-3 mt-3">
+                    <input type="text" class="form-control w-25" placeholder="Busqueda" [(ngModel)]='searchTerm'>
+
+                    <!--<select class="form-control" [(ngModel)]='searchTerm'>
+                        <option value="" disabled selected>Estado</option>
+                        <option [(ngModel)]='searchTerm' value="Pendiente">Pendiente</option>
+                        <option [(ngModel)]='searchTerm' value="Tomada">Tomada</option>
+                    </select>-->
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>No. Casa</th>
+                                        <th>Contador</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let Propiedad of _listaPropiedad | paginate: { itemsPerPage: 10, currentPage: _pagination } table-active ">
+                                        <td>{{Propiedad.codigoPropiedad}}</td>
+                                        <td>{{Propiedad.numeroCasa}}</td>
+                                        <td>{{Propiedad.contador}}</td>
+                                        <td> {{Propiedad.estadoStr}}</td>
+                                        <td> <button
+                                            class="ml-4"
+                                            mat-flat-button
+                                            [color]="'primary'"
+                                            [routerLink]="['crear',Propiedad.codigoPropiedad]">
+                                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                                            <span class="ml-2 mr-1">Crear</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <ngb-pagination [collectionSize]="_cantidad" [(page)]="_pagination" [maxSize]="5" [boundaryLinks]="true">
+                </ngb-pagination>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,304 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
+    <div class="flex flex-col flex-auto min-w-0">
+        
+        <div class="d-flex mb-3 mt-3">
+            <button
+                    class="ml-4"
+                    mat-flat-button
+                    [color]="'primary'"
+                    (click)="newLectura(content1)">
+                    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                    <span class="ml-2 mr-1">Crear</span>
+                    </button>
+        </div>
+
+        <form [formGroup]="LecturaForm" action="/action_page.php" class="was-validated">
+
+            <div class="form-group">
+
+                <ng-template #content1 let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title">Registro de Lectura</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="getLecturas()" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="codigoLectura">Código:</label>
+                                    <input type="number" formControlName="codigoLectura" class="form-control" id="codigoLectura"
+                                        name="codigoLectura" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="fecha">Fecha:</label>
+                                    <input type="date" formControlName="fecha" class="form-control" id="fecha" name="fecha"
+                                        disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="cantidadMetroCubico">Limite (m3) :</label>
+                                    <input type="number" step="any" formControlName="cantidadMetroCubico" class="form-control"
+                                        id="cantidadMetroCubico" name="cantidadMetroCubico" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="lectura">Lectura (m3):</label>
+                                    <input type="number" step="any" formControlName="lectura" class="form-control" id="lectura"
+                                        name="lectura" required>
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="lecturaAnterior">Lectura anterior (m3):</label>
+                                    <input type="number" step="any" formControlName="lecturaAnterior" class="form-control"
+                                        id="lecturaAnterior" name="lecturaAnterior" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="consumoMes">Consumo (m3):</label>
+                                    <input type="number" step="any" formControlName="consumoMes" class="form-control"
+                                        id="consumoMes" name="consumoMes" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="exceso">Exceso (m3):</label>
+                                    <input type="number" step="any" formControlName="exceso" class="form-control" id="exceso"
+                                        name="exceso" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                        <input #imageInput type='file'
+                                accept='image/*'
+                                (change)='processFile(imageInput)'>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button class="btn btn-success btn-rounded btn-block" (click)="saveLectura()"> 
+                                Guardar</button>
+
+                        <button type="button" class="btn btn-danger btn-rounded btn-block"
+                        (click)="getLecturas()" (click)="modal.close('Close click')">Cerrar</button>
+                    </div>
+                </ng-template>
+                <!--<button class="btn btn-info btn-block" (click)="newLectura()"><i class="fa fa-clone"> Crear</i></button>-->
+            </div>
+
+            <mat-accordion class="max-w-4xl mt-12">
+                <mat-expansion-panel [expanded]="1">
+                    <mat-expansion-panel-header [collapsedHeight]="'70px'">
+                        <mat-panel-title><div class="text-4xl font-extrabold tracking-tight leading-none">Lecturas de Contadores</div></mat-panel-title>
+                    </mat-expansion-panel-header>
+
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="panel-body">
+
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Fecha</th>
+                                                <th>Lectura</th>
+                                                <th>Consumo</th>
+                                                <th>Exceso</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let Lectura of ListaLecturas | paginate: { itemsPerPage: 4, currentPage: pagination } table-active ">
+                                                <td>{{Lectura.codigoLectura}}</td>
+                                                <td>{{Lectura.fechaStr}}</td>
+                                                <td>{{Lectura.lectura}}</td>
+                                                <td>{{Lectura.consumoMes}}</td>
+                                                <td>{{Lectura.exceso}}</td>
+                                                <td>
+                                                    <button
+                                                    class="ml-4"
+                                                    mat-flat-button
+                                                    [color]="'primary'"
+                                                    (click)="deleteLectura(Lectura.codigoLectura)">
+                                                    <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <ng-template #content3 let-modal>
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Detalle de Lectura</h4>
+                                                            <button type="button" class="close" aria-label="Close"
+                                                                (click)="modal.dismiss('Cross click')">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label for="codigoLectura">Código:</label>
+                                                                        <input type="number" formControlName="codigoLectura"
+                                                                            class="form-control" id="codigoLectura" name="codigoLectura"
+                                                                            disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label for="fecha">Fecha:</label>
+                                                                        <input type="date" formControlName="fecha" class="form-control"
+                                                                            id="fecha" name="fecha" disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label for="cantidadMetroCubico">Limite (m3) :</label>
+                                                                        <input type="number" step="any"
+                                                                            formControlName="cantidadMetroCubico" class="form-control"
+                                                                            id="cantidadMetroCubico" name="cantidadMetroCubico"
+                                                                            disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label for="lectura">Lectura (m3):</label>
+                                                                        <input type="number" step="any" formControlName="lectura"
+                                                                            class="form-control" id="lectura" name="lectura" disabled>
+                                                                        <div class="valid-feedback"></div>
+                                                                        <div class="invalid-feedback">Por favor rellene este campo.
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label for="lecturaAnterior">Lectura anterior (m3):</label>
+                                                                        <input type="number" step="any"
+                                                                            formControlName="lecturaAnterior" class="form-control"
+                                                                            id="lecturaAnterior" name="lecturaAnterior" disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label for="consumoMes">Consumo (m3):</label>
+                                                                        <input type="number" step="any" formControlName="consumoMes"
+                                                                            class="form-control" id="consumoMes" name="consumoMes"
+                                                                            disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label for="exceso">Exceso (m3):</label>
+                                                                        <input type="number" step="any" formControlName="exceso"
+                                                                            class="form-control" id="exceso" name="exceso" disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <img
+                                                                        class="object-cover"
+                                                                        class='img-preview' 
+                                                                        src="{{selectedFileRead.src}}"
+                                                                        alt="Card cover image">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger btn-rounded btn-block"
+                                                                (click)="modal.close('Close click')">Cerrar</button>
+                                                        </div>
+                                                    </ng-template>
+
+                                                    <button
+                                                    class="ml-4"
+                                                    mat-flat-button
+                                                    [color]="'primary'"
+                                                    (click)="getLectura(content3, Lectura.codigoLectura)">
+                                                    <mat-icon [svgIcon]="'heroicons_outline:eye'"></mat-icon>
+                                                    </button>
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <pagination-controls (pageChange)="pagination = $event"></pagination-controls>
+
+                    &nbsp;
+
+                    <div class="form-group">
+                        <button
+                            class="ml-4"
+                            mat-flat-button
+                            [color]="'primary'"
+                            (click)="gotoHome()">
+                            <mat-icon [svgIcon]="'heroicons_outline:arrow-left'"></mat-icon>
+                            <span class="ml-2 mr-1">Regresar</span>
+                            </button>
+                    </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        </form>
+    </div>
+</div>

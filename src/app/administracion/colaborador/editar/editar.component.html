@@ -1,0 +1,256 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
+
+    <div class="flex flex-col flex-auto min-w-0">
+
+        <form [formGroup]="_colaboradorForm" action="/action_page.php" class="was-validated">
+
+            <mat-accordion class="max-w-4xl mt-12">
+                <mat-expansion-panel [expanded]="1">
+                    <mat-expansion-panel-header [collapsedHeight]="'70px'">
+                        <mat-panel-title><div class="text-4xl font-extrabold tracking-tight leading-none">Datos Generales</div></mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="codigoCondominio">Condominio: </label>
+                                            <select id="codigoCondominio" formControlName="codigoCondominio" class="form-control"
+                                                disabled>
+                                                <option value="" disabled selected>Seleccione Condominio:</option>
+                                                <option *ngFor="let Condominios of _listaCondominio"
+                                                    [value]="Condominios.codigoCondominio">
+                                                    {{Condominios.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="codigoColaborador">Código:</label>
+                                            <input type="Number" formControlName="codigoColaborador" class="form-control"
+                                                id="codigoColaborador" placeholder="Ingresar nombres" name="codigoColaborador" disabled>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="nombres">Nombres:</label>
+                                            <input type="text" formControlName="nombres" class="form-control" id="nombres"
+                                                placeholder="Nombres" name="nombres" required>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="apellidos">Apellidos:</label>
+                                            <input type="text" formControlName="apellidos" class="form-control" id="apellidos"
+                                                placeholder="Apellidos" name="apellidos" required>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="edad">Edad:</label>
+                                            <input type="number" formControlName="edad" class="form-control" id="edad"
+                                                placeholder="Edad" name="edad" pattern="[0-9]{2,2}" required>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="fechaNacimiento">Fecha de nacimiento:</label>
+                                            <input type="date" formControlName="fechaNacimiento" class="form-control"
+                                                id="fechaNacimiento" placeholder="Fecha de nacimiento" name="fechaNacimiento" required>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="nit">NIT:</label>
+                                            <input type="text" formControlName="nit" class="form-control" id="nit" placeholder="NIT"
+                                                name="nit" required>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="dpi">DPI:</label>
+                                            <input type="text" formControlName="dpi" class="form-control" id="dpi"
+                                                placeholder="0000-00000-0000" name="dpi" pattern="[0-9]+-[0-9]+-[0-9]{4,4}" required>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="correo">Correo electrónico:</label>
+                                            <input type="text" formControlName="correo" class="form-control" id="correo"
+                                                placeholder="Correo" name="correo" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                                                required>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="telefono">Teléfono:</label>
+                                            <input type="text" formControlName="telefono" class="form-control" id="telefono"
+                                                placeholder="Teléfono" name="telefono" pattern="[0-9]{8,8}" required>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="rol">Rol del Colaborador: </label>
+                                            <select formControlName="rol" class="form-control" id="rol" required>
+                                                <option value="" disabled selected>Rol del Colaborador</option>
+                                                <option value="1">Administración</option>
+                                                <option value="2">Mantenimiento</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        &nbsp;
+
+                        <div class="form-group">
+
+                        <button
+                        class="ml-4"
+                        mat-flat-button
+                        [color]="'primary'"
+                        (click)="updateColaborador()"> 
+                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                        <span class="ml-2 mr-1">Guardar</span>
+                        </button>
+
+                        </div>
+        
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+            <mat-accordion class="max-w-4xl mt-12">
+                <mat-expansion-panel [expanded]="0">
+                    <mat-expansion-panel-header [collapsedHeight]="'70px'">
+                        <mat-panel-title><div class="text-4xl font-extrabold tracking-tight leading-none">Estado Usuario</div></mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <label for="fechaAlta">Fecha de alta:</label>
+                                <input type="date" formControlName="fechaAlta" class="form-control" id="fechaAlta"
+                                    placeholder="Ingresar fecha de cumpleaños" name="fechaAlta" disabled>
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fechaBaja">Fecha de baja:</label>
+                                <input type="date" formControlName="fechaBaja" class="form-control" id="fechaBaja"
+                                    placeholder="Ingresar fecha de cumpleaños" name="fechaBaja" disabled>
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="estado">Estado: </label>
+                                <select type="text" formControlName="estado" class="form-control" id="estado" required>
+                                    <option value="" disabled selected>Estado de Colaborador</option>
+                                    <option value="1">Activo</option>
+                                    <option value="0">Inactivo</option>
+                                </select>
+                            </div>
+
+                         </div>
+                    </div>
+
+                    &nbsp;
+
+                    <div class="form-group">
+
+                        <button
+                        class="ml-4"
+                        mat-flat-button
+                        [color]="'primary'"
+                        (click)="EnableDisable()"> 
+                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                        <span class="ml-2 mr-1">Cambiar estado</span>
+                        </button>
+
+                        &nbsp;
+
+                        <button
+                        class="ml-4"
+                        mat-flat-button
+                        [color]="'primary'"
+                        (click)="ResetPassword()"> 
+                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                        <span class="ml-2 mr-1">Reiniciar Contraseña</span>
+                        </button>
+                        
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            &nbsp;
+
+            <div class="form-group">
+
+                <button
+                class="ml-4"
+                mat-flat-button
+                [color]="'primary'"
+                (click)="gotoHome()">
+                <mat-icon [svgIcon]="'heroicons_outline:arrow-left'"></mat-icon>
+                <span class="ml-2 mr-1">Regresar</span>
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>

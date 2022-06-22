@@ -1,0 +1,95 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
+        <div class="flex flex-col flex-auto min-w-0">
+        <form [formGroup]="CondominioForm" action="/action_page.php" class="was-validated">
+
+            <nav class="navbar navbar-expand navbar-dark bg-dark mb-4">
+                <a class="navbar-brand">
+                    <label> Datos  Generales</label>
+                </a>
+                <div class="navbar-collapse">
+                    <ul class="navbar-nav mr-auto"></ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <button type="button" class="btn btn-outline-success  btn-sm my-2 my-sm-0"
+                            (click)="CollapseGeneral = !CollapseGeneral" [attr.aria-expanded]="!CollapseGeneral"
+                            aria-controls="collapseExample">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </form>
+                </div>
+            </nav>
+
+            <div id="collapseExample" [ngbCollapse]="!CollapseGeneral">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="nombre">Nombre:</label>
+                                    <input type="text" formControlName="nombre" class="form-control" id="nombre"
+                                        placeholder="Ingresar nombre" name="nombre" required>
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="direccion">Dirección:</label>
+                                    <input type="text" formControlName="direccion" class="form-control" id="direccion"
+                                        placeholder="Ingresar dirección" name="direccion" required>
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="nit">NIT:</label>
+                                    <input type="text" formControlName="nit" class="form-control" id="nit"
+                                        placeholder="1234567-0" name="nit" required>
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="telefono">Telefono:</label>
+                                    <input type="text" formControlName="telefono" class="form-control" id="telefono"
+                                        placeholder="2222-2222" name="telefono" pattern="[0-9]+-[0-9]{4,4}" required>
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="correo">Correo:</label>
+                            <input type="text" formControlName="correo" class="form-control" id="correo"
+                                placeholder="Ingresar correo electronico" name="correo" required>
+                            <div class="valid-feedback"></div>
+                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-success btn-block" (click)="saveCondominio()"> <i class="fa fa-save"></i> Guardar</button>
+                
+                &nbsp;
+
+                <button class="btn btn-info btn-block" (click)="gotoHome()"><i class="fa fa-arrow-left"> Rergresar</i></button>
+
+            </div>
+        </form>
+    </div>
+</div>

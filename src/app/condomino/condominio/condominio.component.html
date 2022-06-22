@@ -1,0 +1,208 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
+
+    <div class="flex flex-col flex-auto min-w-0">
+
+        <form [formGroup]="CondominioForm" action="/action_page.php" class="was-validated">
+
+            <div class="card card-body">
+                <div class="text-4xl font-extrabold tracking-tight leading-none">Datos del Condominio</div>
+                <div class="mt-1.5 text-lg text-secondary">En este formulario podra consultar los datos generales del condominio.</div>
+                <div class="d-flex mb-3 mt-3"></div>
+            </div>
+
+            <mat-accordion class="max-w-4xl mt-12">
+                <mat-expansion-panel [expanded]="1">
+                    <mat-expansion-panel-header [collapsedHeight]="'70px'">
+                        <mat-panel-title><div class="text-4xl font-extrabold tracking-tight leading-none">Condominio</div></mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre:</label>
+                                        <input type="text" formControlName="nombre" class="form-control" id="nombre"
+                                            placeholder="Ingresar nombre" name="nombre" readonly>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="direccion">Dirección:</label>
+                                        <input type="text" formControlName="direccion" class="form-control" id="direccion"
+                                            placeholder="Ingresar dirección" name="direccion" readonly>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="nit">NIT:</label>
+                                        <input type="text" formControlName="nit" class="form-control" id="nit"
+                                            placeholder="1234567-0" name="nit" readonly>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="telefono">Telefono:</label>
+                                        <input type="text" formControlName="telefono" class="form-control" id="telefono"
+                                            placeholder="2222-2222" name="telefono" pattern="[0-9]+-[0-9]{4,4}" readonly>
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="correo">Correo:</label>
+                                <input type="text" formControlName="correo" class="form-control" id="correo"
+                                    placeholder="Ingresar correo electronico" name="correo" readonly>
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="banco">Cuenta de banco:</label>
+                                <input type="text" formControlName="banco" class="form-control" id="banco"
+                                 name="banco" readonly>
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </form>
+
+        <form [formGroup]="ServicioForm" action="/action_page.php" class="was-validated">
+            <mat-accordion class="max-w-4xl mt-12">
+                <mat-expansion-panel [expanded]="1">
+                    <mat-expansion-panel-header [collapsedHeight]="'70px'">
+                        <mat-panel-title><div class="text-4xl font-extrabold tracking-tight leading-none">Detalle de Servicios</div></mat-panel-title>
+                    </mat-expansion-panel-header>
+
+
+                    <div class="card">
+
+                        <div class="panel-body">
+
+                            <div class="card-body table-responsive">
+                                <table class="table table-sm table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Descripción</th>
+                                            <th>Valor</th>
+                                            <th>Tipo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let Servicio of ListaServicio | paginate: { itemsPerPage: 10, currentPage: pagination } table-active ">
+                                            <td>{{Servicio.codigoServicio}}</td>
+                                            <td>{{Servicio.nombreServicio}}</td>
+                                            <td>{{Servicio.valor}}</td>
+                                            <td>{{Servicio.tipo}}</td>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </form>
+
+        <form [formGroup]="DetCondominioForm" action="/action_page.php" class="was-validated">
+            <mat-accordion class="max-w-4xl mt-12">
+                <mat-expansion-panel [expanded]="1">
+                    <mat-expansion-panel-header [collapsedHeight]="'70px'">
+                        <mat-panel-title><div class="text-4xl font-extrabold tracking-tight leading-none">Datos Generales</div></mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="panel-body">
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="cantidadMetroCubico">Cantidad de m3 por propiedad:</label>
+                                            <input type="number" formControlName="cantidadMetroCubico" class="form-control"
+                                                id="cantidadMetroCubico" name="cantidadMetroCubico" readonly>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="costoMetroCubico">Costo m3 de agua:</label>
+                                            <input type="number" formControlName="costoMetroCubico" class="form-control"
+                                                id="costoMetroCubico" name="costoMetroCubico" readonly>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="costoMetroCubicoExcedente">Costo por m3 de agua excedente:</label>
+                                            <input type="number" step="any" formControlName="costoMetroCubicoExcedente"
+                                                class="form-control" id="costoMetroCubicoExcedente" name="costoMetroCubicoExcedente"
+                                                readonly>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="fechaPago">Ultimo dia de pago:</label>
+                                            <input type="number" step="any" formControlName="fechaPago" class="form-control"
+                                                id="fechaPago" name="fechaPago" readonly>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="fechaLectura">Dia de lectura de contadores:</label>
+                                            <input type="number" step="any" formControlName="fechaLectura" class="form-control"
+                                                id="fechaLectura" name="fechaLectura" readonly>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+        </form>
+    </div>
+</div>

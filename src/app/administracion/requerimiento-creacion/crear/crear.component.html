@@ -1,0 +1,161 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
+
+    <div class="flex flex-col flex-auto min-w-0">
+
+        <form [formGroup]="RequerimientoForm" action="/action_page.php" class="was-validated">
+
+            <mat-accordion class="max-w-4xl mt-12">
+                <mat-expansion-panel [expanded]="1">
+                    <mat-expansion-panel-header [collapsedHeight]="'70px'">
+                        <mat-panel-title><div class="text-4xl font-extrabold tracking-tight leading-none">Creación de Requerimientos</div></mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="card">
+                        <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="codigoRequerimiento">Código de Requerimiento:</label>
+                                            <input type="number" formControlName="codigoRequerimiento" class="form-control form-control-sm"
+                                                id="codigoRequerimiento" name="codigoRequerimiento" readonly>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="fecha">Fecha de creación:</label>
+                                            <input type="date" formControlName="fecha" class="form-control form-control-sm" id="fecha"
+                                                name="fecha" readonly>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="codigoUsuario">Condomino: </label>
+                                            <select id="codigoUsuario" formControlName="codigoUsuario" class="form-control" (change)="GetPropiedades()" required>
+                                                <option value="" disabled selected>Seleccione Condomino:</option>
+                                                <option *ngFor="let Condominos of ListaCondomino" [value]="Condominos.codigoUsuario">
+                                                    {{Condominos.nombres}} {{Condominos.apellidos}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="codigoPropiedad">Propiedad: </label>
+                                            <select id="codigoPropiedad" formControlName="codigoPropiedad" class="form-control" required>
+                                                <option value="" disabled selected>Seleccione Propiedad:</option>
+                                                <option *ngFor="let Propiedades of ListaPropiedad" [value]="Propiedades.codigoPropiedad">
+                                                {{Propiedades.numeroCasa}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="saldo">Monto:</label>
+                                            <input type="number" formControlName="monto" class="form-control form-control-sm" id="monto"
+                                                name="monto" readonly>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="saldo">Saldo:</label>
+                                            <input type="number" formControlName="saldo" class="form-control form-control-sm" id="saldo"
+                                                name="saldo" readonly>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--<div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="saldoAnterior">Saldo Acumulado:</label>
+                                            <input type="number" formControlName="saldoAnterior" class="form-control form-control-sm"
+                                                id="saldoAnterior" name="saldoAnterior" required>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                        </div>
+                                    </div>
+                                </div>-->
+
+                                <div class="panel-body">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-sm table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Concepto</th>
+                                                            <th>Valor</th>
+                                                            <th>Concepto</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tr *ngFor="let u of ListaServicio table-active"
+                                                        [class.selectedRow]="rowIsSelected(u.codigoServicio)"
+                                                        (click)="onRowClick(u.codigoServicio, u.valor)" style="cursor: pointer;">
+                                                        <td class="row-left title">{{u.codigoServicio}}</td>
+                                                        <td class="row-mid title">{{u.nombreServicio}}</td>
+                                                        <td class="row-mid title">{{u.valor}}</td>
+                                                        <td class="row-right"></td>
+                                                        <td>{{u.tipo}}</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                &nbsp;
+
+                            <div class="form-group">
+
+                                <button
+                                class="ml-4"
+                                mat-flat-button
+                                [color]="'primary'"
+                                (click)="saveRequerimiento()"> 
+                                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                                <span class="ml-2 mr-1">Guardar</span>
+                                </button>
+            
+                                &nbsp;
+            
+                                <button
+                                class="ml-4"
+                                mat-flat-button
+                                [color]="'primary'"
+                                (click)="gotoHome()">
+                                <mat-icon [svgIcon]="'heroicons_outline:arrow-left'"></mat-icon>
+                                <span class="ml-2 mr-1">Regresar</span>
+                                </button>
+            
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </form>
+        <notifier-container></notifier-container>
+    </div>
+</div>

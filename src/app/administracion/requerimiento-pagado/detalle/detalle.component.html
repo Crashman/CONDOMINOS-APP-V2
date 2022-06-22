@@ -1,0 +1,160 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
+
+    <div class="flex flex-col flex-auto min-w-0">
+
+        <form [formGroup]="_requerimientoForm" action="/action_page.php" class="was-validated">
+
+            <mat-accordion class="max-w-4xl mt-12">
+                <mat-expansion-panel [expanded]="1">
+                    <mat-expansion-panel-header [collapsedHeight]="'70px'">
+                        <mat-panel-title><div class="text-4xl font-extrabold tracking-tight leading-none">Requerimiento de Cobro</div></mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="card">
+                        <div class="card-body">
+
+                            <!-- Main -->
+                            <div class="inline-block p-6 sm:p-10 text-left print:p-0">
+
+                                <!-- Invoice -->
+                                <div class="w-240 p-16 rounded-2xl shadow bg-card print:w-auto print:rounded-none print:shadow-none print:bg-transparent">
+
+                                    <div class="flex items-start justify-between">
+                                        <div class="grid grid-cols-2 gap-x-5 gap-y-2">
+                                            
+                                            <div class="font-medium tracking-tight text-secondary">Asociación de vecinos Alamedas de Santa Rita</div>
+                                            <div class="text-4xl" ></div>
+
+                                            <div class="text-3xl tracking-tight text-secondary">REQURIMIENTO DE COBRO</div>
+                                            <div class="text-3xl" ><input type="text" formControlName="codigoRequerimiento" id="codigoRequerimiento" name="codigoRequerimiento">
+                                            </div>
+
+                                            <div class="font-medium tracking-tight text-secondary">ESTADO</div>
+                                            <div class="font-medium" >
+                                                <input type="text" formControlName="estado"  id="estado" name="estado" >
+                                            </div>
+
+                                            <div class="font-medium tracking-tight text-secondary">FECHA DE DOCUMENTO</div>
+                                            <div class="font-medium" >
+                                                <input type="date" formControlName="fecha" id="fecha" name="fecha"> 
+                                            </div>
+
+                                            <div class="font-medium tracking-tight text-secondary">TOTAL A PAGAR</div>
+                                            <div class="font-medium" ><input type="text" formControlName="monto"  id="monto" name="monto" ></div>
+                                        
+                                            <div class="font-medium tracking-tight text-secondary">SALDO</div>
+                                            <div class="font-medium" ><input type="text" formControlName="saldo"  id="saldo" name="saldo" ></div>
+
+                                        </div>
+
+                                        <div class="grid auto-cols-max grid-flow-col gap-x-8 -mr-16 py-6 px-8 rounded-l-2xl bg-accent dark">
+                                            <div class="place-self-center w-24">
+                                                <img
+                                                    class="w-24"
+                                                    src="assets/images/logo/logo.svg">
+                                            </div>
+                                            <div class="pl-10 border-l text-md">
+                                                <div class="font-medium"><input type="text" formControlName="nombreC"  id="nombreC" name="nombreC" ></div>
+                                                <div>Km. 19 carretera a antigua a Amatitlán zona 10</div>
+                                                <div>Villa Nueva de Guatemala</div>
+                                                <div><input type="text" formControlName="correoC"  id="correoC" name="correoC" ></div>
+                                                <div><input type="text" formControlName="nitC"  id="nitC" name="nitC" ></div>
+                                                <div><input type="text" formControlName="telefonoC"  id="telefonoC" name="telefonoC" ></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    &nbsp;
+
+                                    <div class="text-md">
+                                        <div class="text-xl font-medium">
+                                            <input type="text" formControlName="nombres"  id="nombres" name="nombres" >
+                                        </div>
+                                        <div>
+                                            <input type="text" formControlName="correo"  id="correo" name="correo" >
+                                        </div>
+                                        <div>NIT: 
+                                            <input type="text" formControlName="nit"  id="nit" name="nit" >
+                                        </div>
+                                        <div>Tel.: 
+                                            <input type="text" formControlName="telefono"  id="telefono" name="telefono" >
+                                        </div>
+                                    </div>
+
+                                    &nbsp;
+                                    <div class="font-medium tracking-tight text-secondary">DETALLE DE SERVICIOS</div>
+                                    &nbsp;
+
+                                    <div class="panel-body">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Concepto</th>
+                                                                <th>Valor</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr
+                                                                *ngFor="let DetRequerimiento of _listaDetRequerimiento table-active ">
+                                                                <td>{{DetRequerimiento.codigoDetRequerimiento}}</td>
+                                                                <td>{{DetRequerimiento.concepto}}</td>
+                                                                <td>{{DetRequerimiento.valor}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-12 gap-x-1 mt-12">
+                                        <div class="col-span-10 self-center text-2xl font-medium tracking-tight text-secondary">TOTAL</div>
+                                        <div class="col-span-2 text-right text-2xl font-medium"><input type="text" formControlName="monto" id="monto" name="monto">    
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-16">
+                                        <div class="font-medium">FECHA DE ULTIMO DIA DE PAGO 10 DE CADA MES.</div>
+                                        <div class="flex items-start mt-4">
+                                            <img
+                                                class="flex-0 w-10 mt-2"
+                                                src="assets/images/logo/logo.svg">
+                                            <div class="ml-6 text-sm text-secondary">
+                                                SIRVASE CANCELAR EN EL BI ANTES DE LA FECHA INDICADA, DE LO CONTRARIO SE CARGARA MORA.
+                                            </div>
+                                            &nbsp;
+                                            <div class="ml-6 text-sm text-secondary">
+                                                CTA. #<input type="text" formControlName="bancoC"  id="bancoC" name="bancoC">ASOCIACIÓN DE VECIONOS DE ALAMEDAS DE SANTA RITA.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    &nbsp;
+
+                    <div class="form-group">                
+                        <button
+                        class="ml-4"
+                        mat-flat-button
+                        [color]="'primary'"
+                        (click)="gotoHome()">
+                        <mat-icon [svgIcon]="'heroicons_outline:arrow-left'"></mat-icon>
+                        <span class="ml-2 mr-1">Regresar</span>
+                        </button>
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+
+        </form>
+    </div>
+</div>

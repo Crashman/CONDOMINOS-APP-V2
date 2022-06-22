@@ -1,0 +1,142 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
+
+    <div class="flex flex-col flex-auto min-w-0">
+
+        <form [formGroup]="CondominoForm" action="/action_page.php" class="was-validated">
+
+            <mat-accordion class="max-w-4xl mt-12">
+                <mat-expansion-panel [expanded]="1">
+                    <mat-expansion-panel-header [collapsedHeight]="'70px'">
+                        <mat-panel-title><div class="text-4xl font-extrabold tracking-tight leading-none">Registro de Condominos</div></mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="nombres">Nombres:</label>
+                                <input type="text" formControlName="nombres" class="form-control" id="nombres"
+                                    placeholder="Nombres" name="nombres" required>
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="apellidos">Apellidos:</label>
+                                <input type="text" formControlName="apellidos" class="form-control" id="apellidos"
+                                    placeholder="Apellidos" name="apellidos" required>
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+                            </div>
+                        </div>
+
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="fechaNacimiento">Fecha de nacimiento:</label>
+                                <input type="date" formControlName="fechaNacimiento" class="form-control" id="fechaNacimiento"
+                                    placeholder="Fecha de nacimiento" name="fechaNacimiento" required>
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="nit">NIT:</label>
+                                <input type="text" formControlName="nit" class="form-control" id="nit" placeholder="NIT"
+                                    name="nit" required>
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="dpi">DPI:</label>
+                                <input type="text" formControlName="dpi" class="form-control" id="dpi"
+                                    placeholder="0000-00000-0000" name="dpi" pattern="[0-9]+-[0-9]+-[0-9]{4,4}" required>
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="correo">Correo electrónico:</label>
+                                <input type="text" formControlName="correo" class="form-control" id="correo"
+                                    placeholder="Correo" name="correo" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                                    required>
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="telefono">Teléfono:</label>
+                                <input type="text" formControlName="telefono" class="form-control" id="telefono"
+                                    placeholder="Teléfono" name="telefono" pattern="[0-9]{8,8}" required>
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="tipo">Tipo de condomino: </label>
+                                <select formControlName="tipo" class="form-control" id="tipo" required>
+                                    <option value="" disabled selected>Tipo de condomino</option>
+                                    <option value="3">Propietario</option>
+                                    <option value="4">Inquilino</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <button
+                    class="ml-4"
+                    mat-flat-button
+                    [color]="'primary'"
+                    (click)="createCondomino()"> 
+                    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                    <span class="ml-2 mr-1">Guardar</span>
+                    </button>
+
+                    &nbsp;
+
+                    <button
+                    class="ml-4"
+                    mat-flat-button
+                    [color]="'primary'"
+                    (click)="gotoHome()">
+                    <mat-icon [svgIcon]="'heroicons_outline:arrow-left'"></mat-icon>
+                    <span class="ml-2 mr-1">Regresar</span>
+                    </button>
+
+                </div>
+
+                  <!-- Alert -->
+                  <fuse-alert
+                  class="mt-8 -mb-4"
+                  *ngIf="showAlert"
+                  [appearance]="'outline'"
+                  [showIcon]="false"
+                  [type]="alert.type"
+                  [@shake]="alert.type === 'error'">
+                  {{alert.message}}
+                  </fuse-alert>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,337 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
+    <div class="flex flex-col flex-auto min-w-0">
+
+        <form [formGroup]="_pagoForm" action="/action_page.php" class="was-validated">
+
+            <div class="form-group">
+
+                <ng-template #content1 let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title">Pago de Requerimiento</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="getPagos()"
+                            (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="codigoPago">Código de pago:</label>
+                                    <input type="number" formControlName="codigoPago" class="form-control"
+                                        id="codigoPago" name="codigoPago" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="codigoRequerimiento">Código de Requerimiento:</label>
+                                    <input type="number" formControlName="codigoRequerimiento" class="form-control"
+                                        id="codigoRequerimiento" name="codigoRequerimiento" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="banco">Banco: </label>
+                                    <select formControlName="banco" class="form-control" id="banco" required>
+                                        <option value="" selected>Banco origen</option>
+                                        <option value="AZTECA">AZTECA</option>
+                                        <option value="BAC">BAC</option>
+                                        <option value="BANCO DE ACNTIGUA">BANCO DE ANTIGUA</option>
+                                        <option value="BANCO DE GUATEMALA">BANCO DE GUATEMALA</option>
+                                        <option value="BANCO INV S.A.">BANCO INV S.A.</option>
+                                        <option value="BANCO PROMERICA">BANCO PROMERICA</option>
+                                        <option value="BANRURAL">BANRURAL</option>
+                                        <option value="BANTAB">BANTRAB</option>
+                                        <option value="CITIBANK N.A.">CITIBANK N.A.</option>
+                                        <option value="FICHOSA">FICHOSA</option>
+                                        <option value="G&T CONTINENTAL">G&T CONTINENTAL</option>
+                                        <option value="INMOBILIARIO">INMOBILIARIO</option>
+                                        <option value="BANCO INDUSTRIAL">BANCO INDUSTRIAL</option>
+                                        <option value="INETNACIONAL">INETNACIONAL</option>
+                                        <option value="VIVIBANCO">VIVIBANCO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="comprobanteFecha">Fecha de comprobante:</label>
+                                    <input type="date" formControlName="comprobanteFecha" class="form-control"
+                                        id="comprobanteFecha" name="comprobanteFecha" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="comprobantePago">Número de documento de pago :</label>
+                                    <input type="text" step="any" formControlName="comprobantePago" class="form-control"
+                                        id="comprobantePago" name="comprobantePago" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="comprobanteMonto">Monto:</label>
+                                    <input type="number" step="any" formControlName="comprobanteMonto" class="form-control"
+                                        id="comprobanteMonto" name="comprobanteMonto" required>
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="fechaPago">Fecha de Pago:</label>
+                                    <input type="date" formControlName="fechaPago" class="form-control" id="fechaPago"
+                                        name="fechaPago" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <input #imageInput type='file'
+                                    accept='image/*'
+                                    (change)='processFile(imageInput)'>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button class="btn btn-success btn-rounded btn-block" (click)="savePago()">
+                            Guardar</button>
+
+                        <button type="button" class="btn btn-danger btn-rounded btn-block" (click)="getPagos()"
+                            (click)="modal.close('Close click')">Cerrar</button>
+                    </div>
+                </ng-template>
+            </div>
+
+            <mat-accordion class="max-w-4xl mt-12">
+                <mat-expansion-panel [expanded]="1">
+                    <mat-expansion-panel-header [collapsedHeight]="'70px'">
+                        <mat-panel-title><div class="text-4xl font-extrabold tracking-tight leading-none">Pagos</div></mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Banco</th>
+                                            <th>No. Documento</th>
+                                            <th>Fecha de documento</th>
+                                            <th>Fecha de pago</th>
+                                            <th>Monto</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let Pago of _listaPagos | paginate: { itemsPerPage: 4, currentPage: _pagination } table-active ">
+                                            <td>{{Pago.codigoPago}}</td>
+                                            <td>{{Pago.banco}}</td>
+                                            <td>{{Pago.comprobantePago}}</td>
+                                            <td>{{Pago.fechaBoletaStr}}</td>
+                                            <td>{{Pago.fechaPagoStr}}</td>
+                                            <td>{{Pago.comprobanteMonto}}</td>
+                                            <td>{{Pago.estadoStr}}</td>
+                                           
+                                            <td>
+                                                <ng-template #content2 let-modal>
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Detalle de Lectura</h4>
+                                                        <button type="button" class="close" aria-label="Close"
+                                                            (click)="modal.dismiss('Cross click')">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label for="codigoRequerimiento">Código de
+                                                                        Requerimiento:</label>
+                                                                    <input type="number" formControlName="codigoRequerimiento"
+                                                                        class="form-control" id="codigoRequerimiento"
+                                                                        name="codigoRequerimiento" disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label for="codigoPago">Código de Pago:</label>
+                                                                    <input type="number" formControlName="codigoPago"
+                                                                        class="form-control" id="codigoPago" name="codigoPago"
+                                                                        disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label for="banco">Banco: </label>
+                                                                    <select formControlName="banco" class="form-control" id="banco"
+                                                                        disabled>
+                                                                        <option value="" selected>Banco origen</option>
+                                                                        <option value="AZTECA">AZTECA</option>
+                                                                        <option value="BAC">BAC</option>
+                                                                        <option value="BANCO DE ACNTIGUA">BANCO DE ANTIGUA</option>
+                                                                        <option value="BANCO DE GUATEMALA">BANCO DE GUATEMALA
+                                                                        </option>
+                                                                        <option value="BANCO INV S.A.">BANCO INV S.A.</option>
+                                                                        <option value="BANCO PROMERICA">BANCO PROMERICA</option>
+                                                                        <option value="BANRURAL">BANRURAL</option>
+                                                                        <option value="BANTAB">BANTRAB</option>
+                                                                        <option value="CITIBANK N.A.">CITIBANK N.A.</option>
+                                                                        <option value="FICHOSA">FICHOSA</option>
+                                                                        <option value="G&T CONTINENTAL">G&T CONTINENTAL</option>
+                                                                        <option value="INMOBILIARIO">INMOBILIARIO</option>
+                                                                        <option value="BANCO INDUSTRIAL">BANCO INDUSTRIAL</option>
+                                                                        <option value="INETNACIONAL">INETNACIONAL</option>
+                                                                        <option value="VIVIBANCO">VIVIBANCO</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label for="comprobanteFecha">Fecha de comprobante:</label>
+                                                                    <input type="date" formControlName="comprobanteFecha"
+                                                                        class="form-control" id="comprobanteFecha"
+                                                                        name="comprobanteFecha" disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label for="comprobantePago">Número de documento de pago
+                                                                        :</label>
+                                                                    <input type="text" step="any" formControlName="comprobantePago"
+                                                                        class="form-control" id="comprobantePago"
+                                                                        name="comprobantePago" disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label for="comprobanteMonto">Monto:</label>
+                                                                    <input type="number" step="any"
+                                                                        formControlName="comprobanteMonto" class="form-control"
+                                                                        id="comprobanteMonto" name="comprobanteMonto" disabled>
+                                                                    <div class="valid-feedback"></div>
+                                                                    <div class="invalid-feedback">Por favor rellene este campo.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label for="fechaPago">Fecha de Pago:</label>
+                                                                    <input type="date" formControlName="fechaPago"
+                                                                        class="form-control" id="fechaPago" name="fechaPago"
+                                                                        disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label for="estado">Estado: </label>
+                                                                    <select formControlName="estado" class="form-control"
+                                                                        id="estado" disabled>
+                                                                        <option value="" selected>Pendiente de aprobación</option>
+                                                                        <option value="0">Creado</option>
+                                                                        <option value="1">Aprobado</option>
+                                                                        <option value="2">Rechazado</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <img
+                                                                    class="object-cover"
+                                                                    class='img-preview' 
+                                                                    src="{{selectedFileRead.src}}"
+                                                                    alt="Card cover image">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger btn-rounded btn-block"
+                                                            (click)="modal.close('Close click')">Cerrar</button>
+                                                    </div>
+                                                </ng-template>
+
+                                                <button
+                                                class="ml-4"
+                                                mat-flat-button
+                                                [color]="'primary'"
+                                                (click)="getPago(content2, Pago.codigoPago)"> 
+                                                <mat-icon [svgIcon]="'heroicons_outline:eye'"></mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <pagination-controls (pageChange)="_pagination = $event"></pagination-controls>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            &nbsp;
+
+            <div class="form-group">
+                <button
+                class="ml-4"
+                mat-flat-button
+                [color]="'primary'"
+                (click)="gotoHome()">
+                <mat-icon [svgIcon]="'heroicons_outline:arrow-left'"></mat-icon>
+                <span class="ml-2 mr-1">Regresar</span>
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

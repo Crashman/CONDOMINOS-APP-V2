@@ -1,0 +1,149 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
+    <div class="flex flex-col flex-auto min-w-0">
+        
+        <div class="col-12">
+            <div class="card card-body">
+                <div class="text-4xl font-extrabold tracking-tight leading-none">Anuncios</div>
+                <div class="mt-1.5 text-lg text-secondary">Anuncios para el codominio</div>
+        
+                    <div class="card">
+                        <div class="panel-body">
+                            <div class="card-body table-responsive">
+                                <table class="table table-sm table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Descripción</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let Anuncios of _listaAnuncio | paginate: { itemsPerPage: 4, currentPage: pagination } table-active ">
+                                            <td>{{Anuncios.codigoAnuncio}}</td>
+                                            <td>{{Anuncios.descripcion}}</td>
+                                            <td>{{Anuncios.estadoStr}}</td>
+                                            <td>
+                                                <button
+                                                class="ml-4"
+                                                mat-flat-button
+                                                [color]="'primary'"
+                                                (click)="deleteAnuncio(Anuncios.codigoAnuncio)">
+                                                <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                                                </button>
+
+                                                <ng-template #content3 let-modal>
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Detalle de Anuncio</h4>
+                                                        <button type="button" class="close" aria-label="Close"
+                                                            (click)="modal.dismiss('Cross click')">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <img
+                                                                    class="object-cover"
+                                                                    class='img-preview' 
+                                                                    src="{{selectedFileRead.src}}"
+                                                                    alt="Card cover image">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger btn-rounded btn-block"
+                                                            (click)="modal.close('Close click')">Cerrar</button>
+                                                    </div>
+                                                </ng-template>
+
+                                                <button
+                                                class="ml-4"
+                                                mat-flat-button
+                                                [color]="'primary'"
+                                                (click)="getAnuncio(content3, Anuncios.codigoAnuncio)">
+                                                <mat-icon [svgIcon]="'heroicons_outline:eye'"></mat-icon>
+                                                </button>
+
+                                                <button
+                                                class="ml-4"
+                                                mat-flat-button
+                                                [color]="'primary'"
+                                                (click)="editAnuncio(Anuncios.codigoAnuncio)">
+                                                <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <pagination-controls (pageChange)="pagination = $event"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+
+                <form [formGroup]="_anuncioForm" action="/action_page.php" class="was-validated">
+    
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="codigoAnuncio">Código:</label>
+                                    <input type="number" formControlName="codigoAnuncio" class="form-control"
+                                        id="codigoAnuncio" name="codigoAnuncio" disabled>
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="descripcion">Descripción:</label>
+                                    <input type="text" formControlName="descripcion" class="form-control" id="descripcion"
+                                        name="descripcion" required>
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="estado">Estado: </label>
+                            <select type="text" formControlName="estado" class="form-control" id="estado" required>
+                                <option value="" disabled selected>Estado del anuncio</option>
+                                <option value="1">Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
+                        </div>
+
+                        &nbsp;
+
+                        <div>
+                            <input #imageInput type='file'
+                                    accept='image/*'
+                                    (change)='processFile(imageInput)'>
+                        </div>
+
+                        &nbsp;
+    
+                        <div class="form-group">
+                            <button
+                            class="ml-4"
+                            mat-flat-button
+                            [color]="'primary'"
+                            (click)="saveAnuncio()"> 
+                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                            <span class="ml-2 mr-1">Guardar</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/ad6346e5-5e58-4a8c-9af4-80b4fd7255f3/microsoft.web/sites/subscriptions/ad6346e5-5e58-4a8c-9af4-80b4fd7255f3/resourceGroups/Condominos/providers/Microsoft.Web/sites/condominosapp",
+    "appService.deploySubpath": "dist",
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ]
+}
