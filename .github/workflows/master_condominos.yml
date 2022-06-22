@@ -25,7 +25,7 @@ jobs:
         run: |
           npm install
           npm install -g @angular/cli > /dev/null
-          npm run build --base-href /wwwroot/fuse/ --if-present
+          npm run build --base-href /fuse/ --if-present
       
       - name: Zip artifact for deployment
         run: zip dist.zip ./* -r
