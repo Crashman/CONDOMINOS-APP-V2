@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Condominio } from '../../../models/condominio';
+import { Condominio } from '../../../models/Condominio';
 import { CondominioService } from '../../../services/condominio.service';
 import { ServicioService } from '../../../services/servicio.service';
 import { DetcondominioService } from '../../../services/detcondominio.service';
